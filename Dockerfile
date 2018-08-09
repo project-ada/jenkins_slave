@@ -23,12 +23,19 @@
 FROM jenkins/slave:3.23-1
 
 USER root
-RUN curl -sSL https://get.docker.com/ | sh && usermod -a -G docker jenkins
-VOLUME /var/run/docker.sock
+
+RUN apt-get -yqq update && apt-get -yqq install apt-transport-https ca-certificates curl software-properties-common
+RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add - && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
+RUN apt-get -yqq update && apt-get -yqq install docker-ce
+
+#  | sh && usermod -a -G root jenkins
+
+RUN usermod -aG docker jenkins
+# VOLUME /var/run/docker.sock
 
 RUN apt-get -yqq update && apt-get -yqq install git-core
 
-RUN chown -R jenkins:jenkins /var/run/docker.sock
+# RUN chown -R root:jenkins /var/run/docker.sock
 
 USER jenkins
 
