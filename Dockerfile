@@ -20,11 +20,11 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-FROM jenkins/slave:3.23-1
+FROM jenkins/slave:3.27-1
 
 USER root
 
-RUN apt-get -yqq update && apt-get -yqq install apt-transport-https ca-certificates curl software-properties-common
+RUN apt-get -yqq update && apt-get -yqq install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
 RUN curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | apt-key add - && add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") $(lsb_release -cs) stable"
 RUN apt-get -yqq update && apt-get -yqq install docker-ce
 
