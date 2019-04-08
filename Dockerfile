@@ -37,7 +37,7 @@ RUN apt-get -yqq update && apt-get -yqq install git-core
 
 # RUN chown -R root:jenkins /var/run/docker.sock
 
-# USER jenkins
+USER jenkins
 
 WORKDIR /home/jenkins
 
